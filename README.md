@@ -1,6 +1,6 @@
 # Very Deep VAEs
 
-Repository for the paper "Very Deep VAEs Generalize Autoregressive Models and Can Outperform Them on Images" (https://arxiv.org/abs/2011.10650)
+Repository for the paper "Very Deep VAEs Generalize Autoregressive Models and Can Outperform Them on Images" (<https://arxiv.org/abs/2011.10650>)
 
 Some model samples and a visualization of how it generates them:
 ![image](header-image.png)
@@ -8,7 +8,9 @@ Some model samples and a visualization of how it generates them:
 This repository is tested with PyTorch 1.6, CUDA 10.1, Numpy 1.16, Ubuntu 18.04, and V100 GPUs.
 
 # Setup
+
 Several additional packages are required, including NVIDIA Apex:
+
 ```
 pip install imageio
 pip install mpi4py
@@ -20,6 +22,7 @@ cd ..
 ```
 
 Also, you'll have to download the data, depending on which one you want to run:
+
 ```
 ./setup_cifar10.sh
 ./setup_imagenet.sh imagenet32
@@ -29,6 +32,7 @@ Also, you'll have to download the data, depending on which one you want to run:
 ```
 
 # Training models
+
 Hyperparameters all reside in `hps.py`. We use 2 gpus for our CIFAR-10 runs, and 32 for the rest of the models. (Using a lower batch size is also possible and results in slower learning, and may also require a lower learning rate).
 
 The `mpiexec` arguments you use for runs with more than 1 node depend on the configuration of your system, so please adapt accordingly.
@@ -42,9 +46,11 @@ mpiexec -n 32 python train.py --hps ffhq1024
 ```
 
 # Restoring saved models
+
 For convenience, we have included training checkpoints which can be restored in order to confirm performance, continue training, or generate samples.
 
 ### ImageNet 32
+
 ```bash
 # 119M parameter model, trained for 1.7M iters (about 2.5 weeks on 32 V100)
 wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets/imagenet32-iter-1700000-log.jsonl
@@ -56,6 +62,7 @@ python train.py --hps imagenet32 --restore_path imagenet32-iter-1700000-model.th
 ```
 
 ### ImageNet 64
+
 ```bash
 # 125M parameter model, trained for 1.6M iters (about 2.5 weeks on 32 V100)
 wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/imagenet64-iter-1600000-log.jsonl
@@ -67,6 +74,7 @@ python train.py --hps imagenet64 --restore_path imagenet64-iter-1600000-model.th
 ```
 
 ### FFHQ-256
+
 ```bash
 # 115M parameters, trained for 1.7M iterations (or about 2.5 weeks) on 32 V100
 wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets/ffhq256-iter-1700000-log.jsonl
@@ -78,6 +86,7 @@ python train.py --hps ffhq256 --restore_path ffhq256-iter-1700000-model.th --res
 ```
 
 ### FFHQ-1024
+
 ```bash
 # 115M parameters, trained for 1.7M iterations (or about 2.5 weeks) on 32 V100
 wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets/ffhq1024-iter-1700000-log.jsonl
@@ -89,6 +98,7 @@ python train.py --hps ffhq1024 --restore_path ffhq1024-iter-1700000-model.th --r
 ```
 
 ### CIFAR-10
+
 ```bash
 # 39M parameters, trained for ~1M iterations with early stopping (a little less than a week on 2 GPUs)
 wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/cifar10-seed0-iter-900000-model-ema.th
